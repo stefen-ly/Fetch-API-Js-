@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.12",
+    "flowbite": "^3.1.2",
+    "preline": "^3.2.3",
+    "tailwindcss": "^4.1.12"
+  },
+  "name": "randercard",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx @tailwindcss/cli -i ./src/css/input.css -o ./src/css/output.css --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
