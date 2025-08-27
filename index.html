@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GlassShop - Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="./src/styles/output.css">
     <style>
       .glass {
@@ -189,25 +190,25 @@
         <!-- Desktop Menu -->
         <div class="hidden md:flex items-center space-x-8">
           <a
-            href="#"
+            href="/index.html"
             onclick="showPage('home')"
             class="nav-link text-white hover:text-purple-200 transition-colors"
             >Home</a
           >
           <a
-            href="#"
+            href="./src/app/product.html"
             onclick="showPage('products')"
             class="nav-link text-white hover:text-purple-200 transition-colors"
             >Products</a
           >
           <a
-            href="#"
+            href="./src/app/about.html"
             onclick="showPage('about')"
             class="nav-link text-white hover:text-purple-200 transition-colors"
             >About</a
           >
           <a
-            href="#"
+            href="./src/app/contact.html"
             onclick="showPage('contact')"
             class="nav-link text-white hover:text-purple-200 transition-colors"
             >Contact</a
@@ -294,35 +295,35 @@
 
         <nav class="space-y-4">
           <a
-            href="#"
+            href="/index.html"
             onclick="showPage('home'); closeMobileMenu()"
             class="block text-white hover:text-purple-200 transition-colors py-2 border-b border-white border-opacity-20"
           >
             <i class="fas fa-home mr-3"></i>Home
           </a>
           <a
-            href="#"
+            href="./src/app/products.html"
             onclick="showPage('products'); closeMobileMenu()"
             class="block text-white hover:text-purple-200 transition-colors py-2 border-b border-white border-opacity-20"
           >
             <i class="fas fa-box mr-3"></i>Products
           </a>
           <a
-            href="#"
+            href="./src/app/about.html"
             onclick="showPage('about'); closeMobileMenu()"
             class="block text-white hover:text-purple-200 transition-colors py-2 border-b border-white border-opacity-20"
           >
             <i class="fas fa-info-circle mr-3"></i>About
           </a>
           <a
-            href="#"
+            href="./src/app/contact.html"
             onclick="showPage('contact'); closeMobileMenu()"
             class="block text-white hover:text-purple-200 transition-colors py-2 border-b border-white border-opacity-20"
           >
             <i class="fas fa-envelope mr-3"></i>Contact
           </a>
           <a
-            href="#"
+            href="./src/app/cart.html"
             onclick="showPage('cart'); closeMobileMenu()"
             class="block text-white hover:text-purple-200 transition-colors py-2"
           >
@@ -401,7 +402,7 @@
             </div>
             <div class="md:w-1/2">
               <img
-                src="./image/shopping.png"
+                src="./src/image/shopping.png"
                 alt="Featured Products"
                 class="rounded-xl w-full object-cover"
               />
@@ -788,6 +789,6 @@
       </div>
     </footer>
 
-    <script src="./js/main.js"></script>
+    <script src="./src/js/main.js"></script>
   </body>
 </html>

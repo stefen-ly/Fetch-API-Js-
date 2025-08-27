@@ -44,7 +44,24 @@ function closeMobileMenu() {
 
 // Page navigation
 function showPage(page) {
-  document.getElementById("home-page").classList.remove("hidden");
+  const pageMap = {
+    home: "../index.html",
+    products: "../src/app/products.html",
+    about: "../src/app/about.html",
+    contact: "../src/app/contact.html",
+    cart: "../src/app/cart.html",
+    login: "../src/app/login.html",
+    signup: "./src/app/signup.html",
+  };
+
+  // Navigate to the corresponding page if it exists in the pageMap
+  if (pageMap[page]) {
+    window.location.href = pageMap[page];
+  } else {
+    console.error(`Page "${page}" not found.`);
+    // Optionally, show the home page or handle the error
+    document.getElementById("home-page").classList.remove("hidden");
+  }
 }
 
 // Fetch products from API
