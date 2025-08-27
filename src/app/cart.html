@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GlassShop - Home</title>
+    <title>Cart</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../src/styles/output.css">
+    <link rel="stylesheet" href="../styles/output.css">
     <style>
       .glass {
         background: rgba(255, 255, 255, 0.08);
@@ -83,20 +83,32 @@
         transform: translateY(-1px);
       }
 
-      .card-hover {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      .card-hover:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 48px rgba(0, 0, 0, 0.2);
-      }
-
       .text-gradient {
         background: linear-gradient(135deg, #667eea, #764ba2);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+      }
+
+      .input-glass {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        padding: 12px 16px;
+        color: white;
+        width: 100%;
+        transition: all 0.3s ease;
+      }
+
+      .input-glass:focus {
+        outline: none;
+        border-color: rgba(255, 255, 255, 0.4);
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+      }
+
+      .input-glass::placeholder {
+        color: rgba(255, 255, 255, 0.6);
       }
 
       .fade-in {
@@ -112,65 +124,6 @@
           opacity: 1;
           transform: translateY(0);
         }
-      }
-
-      .loading-spinner {
-        border: 3px solid rgba(255, 255, 255, 0.3);
-        border-radius: 50%;
-        border-top: 3px solid white;
-        width: 24px;
-        height: 24px;
-        animation: spin 1s linear infinite;
-      }
-
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-
-      .feature-card {
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .feature-card:hover {
-        transform: translateY(-12px) scale(1.02);
-        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
-        background: rgba(255, 255, 255, 0.15);
-      }
-
-      .feature-card::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(
-          circle,
-          rgba(255, 255, 255, 0.2) 0%,
-          transparent 70%
-        );
-        transform: rotate(45deg);
-        opacity: 0;
-        transition: opacity 0.4s ease;
-      }
-
-      .feature-card:hover::before {
-        opacity: 1;
-      }
-
-      .feature-icon {
-        transition: transform 0.4s ease;
-      }
-
-      .feature-card:hover .feature-icon {
-        transform: scale(1.2) rotate(5deg);
       }
     </style>
   </head>
@@ -270,7 +223,7 @@
       </div>
     </nav>
 
-    <!-- Mobile Menu -->
+    <!-- Mobile Menu Overlay -->
     <div
       id="mobile-menu-overlay"
       class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden"
@@ -342,7 +295,8 @@
             <button
               id="mobile-logout-btn"
               class="hidden block text-white hover:text-purple-200 transition-colors py-2 w-full text-left"
-              onclick="logout(); closeMobileMenu()">
+              onclick="logout(); closeMobileMenu()"
+            >
               <i class="fas fa-sign-out-alt mr-3"></i>Logout
             </button>
             <button
@@ -366,154 +320,73 @@
 
     <!-- Main Content -->
     <main id="main-content" class="pt-16">
-      <!-- Home Page -->
-      <div id="home-page" class="page">
-        <!-- Hero Section -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div
-            class="glass-strong rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-8"
-          >
-            <div class="md:w-1/2 space-y-6">
-              <h1
-                class="text-4xl md:text-5xl font-bold text-white leading-tight fade-in"
-              >
-                Discover Premium Products with GlassShop
-              </h1>
-              <p class="text-white text-opacity-80 text-lg leading-relaxed">
-                Elevate your shopping experience with our curated collection of
-                high-quality, modern products designed for style and
-                functionality.
-              </p>
-              <div class="flex gap-4">
-                <button
-                  onclick="showPage('products')"
-                  class="btn-primary flex items-center"
-                >
-                  <i class="fas fa-shopping-bag mr-2"></i>Shop Now
-                </button>
-                <button
-                  onclick="showPage('about')"
-                  class="btn-secondary flex items-center"
-                >
-                  <i class="fas fa-info-circle mr-2"></i>Learn More
-                </button>
-              </div>
-            </div>
-            <div class="md:w-1/2">
-              <img
-                src="./image/shopping.png"
-                alt="Featured Products"
-                class="rounded-xl w-full object-cover"
-              />
-            </div>
-          </div>
-        </section>
+      <!-- Cart Page -->
+      <div id="cart-page" class="page">
+        <div class="max-w-4xl mx-auto px-4 py-8">
+          <h1 class="text-3xl font-bold text-white mb-8 fade-in">Your Cart</h1>
 
-        <!-- Featured Products -->
-        <section class="py-16 px-4">
-          <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-12">
-              <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
-                Featured Products
-              </h2>
-              <p class="text-white text-opacity-80 text-lg">
-                Discover our most popular items
-              </p>
-            </div>
-            <div
-              id="featured-products"
-              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-            >
-              <!-- Products  loaded  -->
-            </div>
-          </div>
-        </section>
-
-        <!-- Enhanced Features Section -->
-        <section
-          class="py-16 px-4 bg-gradient-to-b from-transparent to-white/5"
-          role="region"
-          aria-labelledby="features-heading"
-        >
-          <div class="max-w-7xl mx-auto">
-            <h2
-              id="features-heading"
-              class="text-3xl md:text-4xl font-bold text-white text-center mb-12 text-gradient"
-            >
-              Why Choose GlassShop?
+          <div id="cart-empty" class="glass p-8 rounded-xl text-center hidden">
+            <i class="fas fa-shopping-cart text-4xl text-purple-200 mb-4"></i>
+            <h2 class="text-xl font-semibold text-white mb-2">
+              Your cart is empty
             </h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <p class="text-white text-opacity-80 mb-6">
+              Looks like you haven't added any items yet.
+            </p>
+            <button
+              onclick="showPage('products')"
+              class="btn-primary inline-flex items-center"
+            >
+              <i class="fas fa-shopping-bag mr-2"></i>Shop Now
+            </button>
+          </div>
+
+          <div id="cart-content">
+            <div id="cart-items" class="space-y-4 mb-8">
+              <!-- Cart items will be loaded here -->
+            </div>
+
+            <div class="glass p-6 rounded-xl">
               <div
-                class="feature-card glass rounded-2xl p-6 text-center relative overflow-hidden fade-in"
-                style="animation-delay: 0.1s;"
+                class="flex justify-between items-center mb-4 border-b border-white border-opacity-20 pb-4"
               >
-                <i
-                  class="fas fa-credit-card text-purple-200 text-4xl mb-4 feature-icon"
-                  aria-hidden="true"
-                ></i>
-                <span class="sr-only">Secure Payment Icon</span>
-                <h4 class="text-white font-semibold text-xl mb-2">
-                  Secure Payment
-                </h4>
-                <p class="text-white text-opacity-70 text-base leading-relaxed">
-                  Shop with confidence using our SSL-encrypted checkout system for
-                  maximum security.
-                </p>
+                <h2 class="text-xl font-semibold text-white">Cart Summary</h2>
+                <span
+                  id="cart-total-items"
+                  class="text-white text-opacity-80"
+                ></span>
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <span class="text-white">Subtotal</span>
+                <span id="cart-subtotal" class="font-semibold text-white"
+                  >$0.00</span
+                >
+              </div>
+              <div class="flex justify-between items-center mb-6">
+                <span class="text-white">Estimated Shipping</span>
+                <span class="font-semibold text-white">$10.00</span>
               </div>
               <div
-                class="feature-card glass rounded-2xl p-6 text-center relative overflow-hidden fade-in"
-                style="animation-delay: 0.2s;"
+                class="flex justify-between items-center border-t border-white border-opacity-20 pt-4 mb-6"
               >
-                <i
-                  class="fas fa-truck text-purple-200 text-4xl mb-4 feature-icon"
-                  aria-hidden="true"
-                ></i>
-                <span class="sr-only">Free Shipping Icon</span>
-                <h4 class="text-white font-semibold text-xl mb-2">
-                  Free Shipping
-                </h4>
-                <p class="text-white text-opacity-70 text-base leading-relaxed">
-                  Enjoy free shipping on all orders over $50, delivered straight
-                  to your door.
-                </p>
+                <span class="text-lg font-semibold text-white">Total</span>
+                <span
+                  id="cart-total"
+                  class="text-lg font-bold text-gradient"
+                ></span>
               </div>
-              <div
-                class="feature-card glass rounded-2xl p-6 text-center relative overflow-hidden fade-in"
-                style="animation-delay: 0.3s;"
+              <button
+                onclick="showPage('products')"
+                class="btn-secondary w-full mb-4"
               >
-                <i
-                  class="fas fa-shield-alt text-purple-200 text-4xl mb-4 feature-icon"
-                  aria-hidden="true"
-                ></i>
-                <span class="sr-only">Quality Guarantee Icon</span>
-                <h4 class="text-white font-semibold text-xl mb-2">
-                  Quality Guarantee
-                </h4>
-                <p class="text-white text-opacity-70 text-base leading-relaxed">
-                  We curate only premium, high-quality products for lasting
-                  satisfaction.
-                </p>
-              </div>
-              <div
-                class="feature-card glass rounded-2xl p-6 text-center relative overflow-hidden fade-in"
-                style="animation-delay: 0.4s;"
-              >
-                <i
-                  class="fas fa-undo text-purple-200 text-4xl mb-4 feature-icon"
-                  aria-hidden="true"
-                ></i>
-                <span class="sr-only">Easy Returns Icon</span>
-                <h4 class="text-white font-semibold text-xl mb-2">
-                  Easy Returns
-                </h4>
-                <p class="text-white text-opacity-70 text-base leading-relaxed">
-                  Hassle-free returns with our 30-day return policy for your peace
-                  of mind.
-                </p>
-              </div>
+                <i class="fas fa-shopping-bag mr-2"></i>Continue Shopping
+              </button>
+              <button class="btn-primary w-full">
+                <i class="fas fa-credit-card mr-2"></i>Proceed to Checkout
+              </button>
             </div>
           </div>
-        </section>
+        </div>
       </div>
     </main>
 
@@ -752,7 +625,7 @@
           </div>
         </div>
 
-        <!-- Payment -->
+        <!-- Payment Methods -->
         <div class="mt-8 pt-8 border-t border-white border-opacity-20">
           <div class="flex flex-col md:flex-row items-center justify-between">
             <div class="mb-4 md:mb-0">
@@ -788,6 +661,6 @@
       </div>
     </footer>
 
-    <script src="./js/main.js"></script>
+    <script src="../js/cart.js"></script>
   </body>
 </html>

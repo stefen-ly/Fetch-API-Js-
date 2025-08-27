@@ -1,0 +1,147 @@
+      let cart = JSON.parse(localStorage.getItem("glassshop_cart")) || [];
+      let currentUser =
+        JSON.parse(localStorage.getItem("glassshop_user")) || null;
+
+      // Initialize app
+      document.addEventListener("DOMContentLoaded", function () {
+        initializeApp();
+      });
+
+      function initializeApp() {
+        updateUserUI();
+        updateCartCount();
+        setupEventListeners();
+        showPage("login");
+      }
+
+      // Event 
+      function setupEventListeners() {
+        // Mobile menu
+        document
+          .getElementById("mobile-menu-btn")
+          .addEventListener("click", openMobileMenu);
+        document
+          .getElementById("mobile-menu-close")
+          .addEventListener("click", closeMobileMenu);
+        document
+          .getElementById("mobile-menu-overlay")
+          .addEventListener("click", closeMobileMenu);
+      }
+
+      // Mobile menu
+      function openMobileMenu() {
+        document.getElementById("mobile-menu").classList.add("active");
+        document
+          .getElementById("mobile-menu-overlay")
+          .classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeMobileMenu() {
+        document.getElementById("mobile-menu").classList.remove("active");
+        document.getElementById("mobile-menu-overlay").classList.add("hidden");
+        document.body.style.overflow = "auto";
+      }
+
+      // Page navigation
+      function showPage(page) {
+        document.getElementById("login-page").classList.remove("hidden");
+      }
+
+      // Cart 
+      function updateCartCount() {
+        const count = cart.reduce((total, item) => total + item.quantity, 0);
+        document.getElementById("cart-count").textContent = count;
+        document.getElementById("mobile-cart-count").textContent = count;
+      }
+
+      // Authentication 
+      function updateUserUI() {
+        const userInfo = document.getElementById("user-info");
+        const userName = document.getElementById("user-name");
+        const loginBtn = document.getElementById("login-btn");
+        const signupBtn = document.getElementById("signup-btn");
+        const logoutBtn = document.getElementById("logout-btn");
+
+        const mobileUserInfo = document.getElementById("mobile-user-info");
+        const mobileUserName = document.getElementById("mobile-user-name");
+        const mobileLoginBtn = document.getElementById("mobile-login-btn");
+        const mobileSignupBtn = document.getElementById("mobile-signup-btn");
+        const mobileLogoutBtn = document.getElementById("mobile-logout-btn");
+
+        if (currentUser) {
+          userInfo.classList.remove("hidden");
+          userInfo.classList.add("flex");
+          userName.textContent = currentUser.name;
+          loginBtn.classList.add("hidden");
+          signupBtn.classList.add("hidden");
+          logoutBtn.classList.remove("hidden");
+
+          mobileUserInfo.classList.remove("hidden");
+          mobileUserName.textContent = currentUser.name;
+          mobileLoginBtn.classList.add("hidden");
+          mobileSignupBtn.classList.add("hidden");
+          mobileLogoutBtn.classList.remove("hidden");
+        } else {
+          userInfo.classList.add("hidden");
+          loginBtn.classList.remove("hidden");
+          signupBtn.classList.remove("hidden");
+          logoutBtn.classList.add("hidden");
+
+          mobileUserInfo.classList.add("hidden");
+          mobileLoginBtn.classList.remove("hidden");
+          mobileSignupBtn.classList.remove("hidden");
+          mobileLogoutBtn.classList.add("hidden");
+        }
+      }
+
+      function handleLogin() {
+        const email = document.getElementById("login-email").value;
+        const password = document.getElementById("login-password").value;
+
+        if (email && password) {
+          currentUser = { email, name: email.split("@")[0] };
+          localStorage.setItem("glassshop_user", JSON.stringify(currentUser));
+          updateUserUI();
+          showNotification("Logged in successfully!");
+          showPage("home");
+        } else {
+          showNotification("Please fill in all fields", "error");
+        }
+      }
+
+      function logout() {
+        currentUser = null;
+        localStorage.removeItem("glassshop_user");
+        updateUserUI();
+        showNotification("Logged out successfully!");
+      }
+
+      // Notification system
+      function showNotification(message, type = "success") {
+        const notification = document.createElement("div");
+        notification.className = `fixed top-20 right-4 z-50 glass-strong p-4 rounded-xl text-white max-w-sm transition-all duration-300 transform translate-x-full`;
+        notification.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-${
+                      type === "success"
+                        ? "check-circle text-green-400"
+                        : "exclamation-circle text-red-400"
+                    }"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          notification.classList.remove("translate-x-full");
+        }, 100);
+
+        setTimeout(() => {
+          notification.classList.add("translate-x-full");
+          setTimeout(() => {
+            document.body.removeChild(notification);
+          }, 300);
+        }, 3000);
+      }
