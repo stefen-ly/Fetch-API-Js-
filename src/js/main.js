@@ -29,7 +29,7 @@ function setupEventListeners() {
     .addEventListener("click", closeMobileMenu);
 }
 
-// Mobile menu functions
+// Mobile menu 
 function openMobileMenu() {
   document.getElementById("mobile-menu").classList.add("active");
   document.getElementById("mobile-menu-overlay").classList.remove("hidden");
@@ -51,15 +51,14 @@ function showPage(page) {
     contact: "../src/app/contact.html",
     cart: "../src/app/cart.html",
     login: "../src/app/login.html",
-    signup: "./src/app/signup.html",
+    signup: "../src/app/signup.html",
   };
 
-  // Navigate to the corresponding page if it exists in the pageMap
+  // Navigate to pageMap
   if (pageMap[page]) {
     window.location.href = pageMap[page];
   } else {
     console.error(`Page "${page}" not found.`);
-    // Optionally, show the home page or handle the error
     document.getElementById("home-page").classList.remove("hidden");
   }
 }
